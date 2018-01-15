@@ -1,8 +1,8 @@
 {
-  "name": "Start on Heroku: Node.js",
-  "description": "A barebones Node.js app using Express 4",
-  "repository": "https://github.com/heroku/node-js-getting-started",
-  "logo": "https://cdn.rawgit.com/heroku/node-js-getting-started/master/public/node.svg",
-  "keywords": ["node", "express", "heroku"],
-  "image": "heroku/nodejs"
+  "name": "Ticking Time Bomb",
+  "description": "Store a text on a blockchain and keep it encrypted until your chosen time period, when it will be automatically decrypted and published.",
+  //"repository": TO-DO
+  //"logo": TO-DO
+  "keywords": ["node", "express", "heroku", "blockchain", "encryption"],
+  //"image": "heroku/nodejs" TO-DO
 }
