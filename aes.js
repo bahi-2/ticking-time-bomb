@@ -1,15 +1,12 @@
-// Part of https://github.com/chris-rock/node-crypto-examples
-
 // Nodejs encryption with CTR
-var algorithm = 'aes-256-ctr',
-    password = 'd6F3Efeq';
+var algorithm = 'aes-256-ctr';
 
-//var generator = require('generate-password');
+var generator = require('generate-password');
  
-//var password = generator.generate({
-  //  length: 10,
-    //numbers: true
-//});
+var password = generator.generate({
+   length: 27,
+    numbers: true
+});
 var crypto = require('crypto');
 module.exports = {
 encrypt: function (text) {
