@@ -17,7 +17,7 @@ module.exports = {
 encrypt: function (text) {
 	key = crypto.randomBytes(32);
 	console.log(key);
-	var cipher = crypto.createCipheriv(algorithm,key)
+	var cipher = crypto.createCipher(algorithm,key);
 	var crypted = cipher.update(text,'utf8','hex')
 	crypted += cipher.final('hex');
 	client.connect();
@@ -33,8 +33,8 @@ encrypt: function (text) {
 },
  
 decrypt: function (text){
-	var decipher = crypto.createDecipher(algorithm,key)
-	var dec = decipher.update(text,'hex','utf8')
+	var decipher = crypto.createDecipher(algorithm,key);
+	var dec = decipher.update(text,'hex','utf8');
 	dec += decipher.final('utf8');
 	return dec;
 }
