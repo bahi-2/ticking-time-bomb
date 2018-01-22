@@ -8,13 +8,7 @@ const server = express()
 	.set('view engine', 'ejs')
 	.get('/upload',(req, res) => res.render('pages/upload'))
 	.get('/', (req, res) => res.render('pages/index'))
-	.get('/times', function(request, response) {
-		var result = ''
-		var times = process.env.TIMES || 5
-		for (i = 0; i < times; i++)
-			result += i + ' ';
-		response.send(result);
-	})
+	.get('/bombs', (req,res) => res.render('pages/bombs'))
 	.listen(PORT, () => console.log(`Listening on ${ PORT }`))
 
 var enc = require('./aes')
