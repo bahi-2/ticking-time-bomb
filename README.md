@@ -1,8 +1,6 @@
-# node-js-getting-started
+# Ticking Time Bomb
 
-A barebones Node.js app using [Express 4](http://expressjs.com/).
-
-This application supports the [Getting Started with Node on Heroku](https://devcenter.heroku.com/articles/getting-started-with-nodejs) article - check it out.
+[This web site](https://fast-refuge-77205.herokuapp.com) is a work in progress. When it is finished it will encrypt a text on the server and save it on a blockchain along side with a specified time. When this time passes the server will load the message from the blockchain, decrypt it and make it publicly available.
 
 ## Running Locally
 
