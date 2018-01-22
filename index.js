@@ -14,7 +14,9 @@ const server = express()
 var enc = require('./aes')
 var io=require("socket.io")(server);
 io.sockets.on('connection',function (socket) {
-	socket.on('encrypt',function(msg,time){io.emit('encrypted',enc.encrypt(msg));});
+	socket.on('encrypt',function(msg,time){
+		io.emit('encrypted',enc.encrypt(msg));
+	});
 });
 io.on('connection', (socket) => {
   console.log('Client connected');
