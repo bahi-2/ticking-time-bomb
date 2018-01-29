@@ -12,14 +12,20 @@ const server = express()
 	.listen(PORT, () => console.log(`Listening on ${ PORT }`))
 
 var enc = require('./aes')
+var contract = require('./contractFunctions')
 var io=require("socket.io")(server);
 io.sockets.on('connection',function (socket) {
-	socket.on('encrypt',function(msg,time){
-		io.emit('encrypted',enc.encrypt(msg));
+	socket.on('store',function(msg,time,publisher,email){
+		aesMsg = enc.encrypt(msg);
+		txAddr = contract.storeBomb(publisher, aesMsg);
+		ethScan = "https://rinkeby.etherscan.io/tx/" + txAddr;
+		//to-do mailServer.sendEmail(email)
+		seconds = time*1000;
+		io.emit('stored',ethScan,seconds)
+		// setTimeout(() => nesto()); //POC ispise na stranici poruku nakon vremena
 	});
 });
 io.on('connection', (socket) => {
   console.log('Client connected');
   socket.on('disconnect', () => console.log('Client disconnected'));
 });
-// setInterval(() => io.emit('time', new Date().toTimeString()), 1000);

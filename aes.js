@@ -16,17 +16,15 @@ const client = new Client({
 module.exports = {
 encrypt: function (text) {
 	key = crypto.randomBytes(32);
-	console.log(key);
 	var cipher = crypto.createCipher(algorithm,key);
-	var crypted = cipher.update(text,'utf8','hex')
+	var crypted = cipher.update(text,'utf8','hex');
 	crypted += cipher.final('hex');
 	client.connect();
-	var queryText = 'INSERT INTO keys(key) VALUES($1) RETURNING index'
+	var queryText = 'INSERT INTO keys(key) VALUES($1) RETURNING index';
 	client.query(queryText, [key], function(err, result) {
 	  if(err) {throw err} //handle error
 	  else {
-	    var newlyCreatedUserId = result.rows[0].index;
-	    console.log(newlyCreatedUserId);
+	    var newlyCreatedKeyIndex = result.rows[0].index; //Key db index for future use
 	  }
 	});
 	return crypted;

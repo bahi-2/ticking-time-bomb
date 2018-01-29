@@ -35,67 +35,74 @@
 							<h3> Enter your message </h3>
 							<div class="input-area no-padding blank form-group status-upload">
 								<textarea id="msg" style="height:200px" class="form-control" required="required" placeholder="The text you enter here will be permanently saved and won't be public until the time you specify."></textarea>
-								<ul>
-									<li><a title="" data-toggle="tooltip" data-placement="bottom" data-original-title="Audio"><i class="fa fa-music"></i></a></li>
-									<li><a title="" data-toggle="tooltip" data-placement="bottom" data-original-title="Video"><i class="fa fa-video-camera"></i></a></li>
-									<li><a title="" data-toggle="tooltip" data-placement="bottom" data-original-title="Sound Record"><i class="fa fa-microphone"></i></a></li>
-									<li><a title="" data-toggle="tooltip" data-placement="bottom" data-original-title="Picture"><i class="fa fa-picture-o"></i></a></li>
-								</ul>
-							</div>
-							<button class="btn btn-primary nextBtn btn-lg pull-right" type="button" >Next</button>
+								<ul style="display: none;"> <!-- TOOO DOOOOOO -->
+								<li><a title="" data-toggle="tooltip" data-placement="bottom" data-original-title="Audio"><i class="fa fa-music"></i></a></li>
+								<li><a title="" data-toggle="tooltip" data-placement="bottom" data-original-title="Video"><i class="fa fa-video-camera"></i></a></li>
+								<li><a title="" data-toggle="tooltip" data-placement="bottom" data-original-title="Sound Record"><i class="fa fa-microphone"></i></a></li>
+								<li><a title="" data-toggle="tooltip" data-placement="bottom" data-original-title="Picture"><i class="fa fa-picture-o"></i></a></li>
+							</ul>
 						</div>
+						<button class="btn btn-primary nextBtn btn-lg pull-right" type="button" >Next</button>
 					</div>
 				</div>
-				<div class="row setup-content" id="step-2">
-					<div class="col-xs-12">
-						<div class="col-md-12">
-							<h3> Specify a time at which your text is to be decrypted and published on this website:</h3>
-							<div class="form-group input-area">
-								<label class="control-label">Time</label>
-								<select class="form-control" id="time" style="width:25%;">
-									<option>5 seconds</option>
-									<option>5 minutes</option>
-									<option>5 hours</option>
-									<option>5 days</option>
-								</select>
-							</div>
-							<button class="btn btn-primary nextBtn btn-lg pull-right" type="button" >Next</button>
-						</div>
-					</div>
-				</div>
-				<div class="row setup-content" id="step-3">
-					<div class="col-xs-12">
-						<div class="col-md-12">
-							<h3> Store the message on the blockchain</h3>
-							<div class="form-group">
-								<label class="control-label">Email (Optional)
-									<input type="text" maxlength="200" class="form-control" placeholder="Email" />
-								</div>
-								<div class="checkbox">
-									<label><input type="checkbox" value="">Notify me when my message becomes public</label>
-								</div>
-								<div class="checkbox">
-									<label><input type="checkbox" value="">Make my email visible on the message post</label>
-								</div>
-								Encrypted message: <p id="enc"></p>
-								<button class="btn btn-success green" type="button" onclick="encrypt();"><i class="fa fa-upload"></i> Upload</button>
-							</div>
-						</div>
-					</div>
-				</form>
 			</div>
-		</body>
-		<script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.0.4/socket.io.js"></script>
-		<script>
-			$(document).ready(function(){
-			$("[data-toggle=tooltip]").tooltip();
-			});
-			function encrypt() {
-				var msg = document.getElementById("msg").value;
-				var time = document.getElementById("time").value;
-				var socket = io(); // connec to server
-				socket.emit('encrypt', msg,time); // raise an event on the server
-				socket.on('encrypted',function(msg){document.getElementById('enc').innerHTML=msg;}); //respond to event on server
-			}
-		</script>
-	</html>
+			<div class="row setup-content" id="step-2">
+				<div class="col-xs-12">
+					<div class="col-md-12">
+						<h3> Specify a time at which your text is to be decrypted and published on this website:</h3>
+						<div class="form-group input-area">
+							<label class="control-label">Time</label>
+							<select class="form-control" id="time" style="width:25%;">
+								<option value="5">5 seconds</option>
+								<option value="300">5 minutes</option>
+								<option value="18000">5 hours</option>
+								<option value="432000">5 days</option>
+							</select>
+						</div>
+						<button class="btn btn-primary nextBtn btn-lg pull-right" type="button" >Next</button>
+					</div>
+				</div>
+			</div>
+			<div class="row setup-content" id="step-3">
+				<div class="col-xs-12">
+					<div class="col-md-12">
+						<h3> Store the message on the blockchain</h3>
+						<div class="form-group">
+							<label required="required" class="control-label">Your name</label>
+							<input id="publisher" type="text" maxlength="200" class="form-control" placeholder="Publisher" />
+							<label style="padding-top:20px;" class="control-label">Email (Optional)</label>
+							<input id="email" type="text" maxlength="200" class="form-control" placeholder="Email" />
+							<div class="checkbox">
+								<label><input type="checkbox" value="">Notify me when my message becomes public</label>
+							</div>
+							<div class="checkbox">
+								<label><input type="checkbox" value="">Make my email visible on the message post</label>
+							</div>
+							<a style="display:none;" id="tx" href="#">Click to view your transaction on EtherScan</a>
+							<button class="btn btn-success green" type="button" onclick="store();"><i class="fa fa-upload"></i> Upload</button>
+						</div>
+					</div>
+				</div>
+			</form>
+		</div>
+	</body>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.0.4/socket.io.js"></script>
+	<script>
+		$(document).ready(function(){
+		$("[data-toggle=tooltip]").tooltip();
+		});
+		function store() {
+			var msg = document.getElementById("msg").value;
+			var time = document.getElementById("time").value;
+			var publisher = document.getElementById("publisher").value;
+			var email = document.getElementById("email").value;
+			var socket = io(); // connec to server
+			socket.emit('store', msg,time,publisher,email); // raise an event on the server
+			socket.on('stored',function(txAddr){
+				txLink=document.getElementById('tx');
+				txLink.href=txAddr; 
+				txLink.style.display='block';
+			}); //respond to event on server
+		}
+	</script>
+</html>
