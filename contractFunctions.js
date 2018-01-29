@@ -182,5 +182,16 @@ module.exports = {
 		var contract = web3.eth.contract(interface);
 		var instance = contract.at(contractAddress);
 		return instance.indexedDocs.call(index);
+	},
+	getAllBombs: function () {
+		var contract = web3.eth.contract(interface);
+		var instance = contract.at(contractAddress);
+		var n = instance.docIndex.call().toNumber();
+		var result = [];
+		for (var i = n - 1; i >= 0; i--) {
+			var parts = instance.indexedDocs.call(i).toString().split(',');
+			result.push(parts);
+		}
+		return result;
 	}
 }

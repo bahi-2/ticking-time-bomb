@@ -2,17 +2,19 @@ const express = require('express')
 const path = require('path')
 const PORT = process.env.PORT || 5000
 
+var contract = require('./contractFunctions')
+var bombs = contract.getAllBombs();
+
 const server = express()
 	.use(express.static(path.join(__dirname, 'public')))
 	.set('views', path.join(__dirname, 'views'))
 	.set('view engine', 'ejs')
-	.get('/upload',(req, res) => res.render('pages/upload'))
+	.get('/create',(req, res) => res.render('pages/create'))
 	.get('/', (req, res) => res.render('pages/index'))
-	.get('/bombs', (req,res) => res.render('pages/bombs'))
+	.get('/bombs', (req,res) => res.render('pages/bombs', {bombs:bombs}))
 	.listen(PORT, () => console.log(`Listening on ${ PORT }`))
 
 var enc = require('./aes')
-var contract = require('./contractFunctions')
 var io=require("socket.io")(server);
 io.sockets.on('connection',function (socket) {
 	socket.on('store',function(msg,time,publisher,email){
