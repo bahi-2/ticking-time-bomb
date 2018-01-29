@@ -1,7 +1,12 @@
 var Web3 = require('web3');
 var util = require('ethereumjs-util');
 var tx = require('ethereumjs-tx');
+try {
 var lightwallet = require('eth-lightwallet');
+} catch (err) {
+	delete global._bitcore
+	var lightwallet = require('eth-lightwallet');
+}
 var txutils = lightwallet.txutils;
 var web3 = new Web3(
     new Web3.providers.HttpProvider('https://rinkeby.infura.io/')
@@ -176,13 +181,6 @@ module.exports = {
 	getBomb: function (index) {
 		var contract = web3.eth.contract(interface);
 		var instance = contract.at(contractAddress);
-		instance.indexedDocs.call(index,function(err, result) {
-		    if(err) {
-		        console.log(err);
-		    } else {
-		        console.log(result.toString());
-		        return result;
-		    }
-		});
+		return instance.indexedDocs.call(index);
 	}
 }
