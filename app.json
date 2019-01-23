@@ -4,5 +4,6 @@
   //"repository": TO-DO
   //"logo": TO-DO
   "keywords": ["node", "express", "heroku", "blockchain", "encryption"],
-  //"image": "heroku/nodejs" TO-DO
+  //"image": "heroku/nodejs" TO-DO,
+  "license": "MIT"
 }
